@@ -339,10 +339,12 @@
 
 #define SPMCSR _SFR_IO8(0x37)
 #define SELFPRGEN 0
+#define SPMEN 0
 #define PGERS 1
 #define PGWRT 2
 #define BLBSET 3
 #define RWWSRE 4
+#define SIGRD 5
 #define RWWSB 6
 #define SPMIE 7
 
@@ -371,6 +373,15 @@
 #define PRTIM0 5
 #define PRTIM2 6
 #define PRTWI 7
+
+#define __AVR_HAVE_PRR	((1<<PRADC)|(1<<PRUSART0)|(1<<PRSPI)|(1<<PRTIM1)|(1<<PRTIM0)|(1<<PRTIM2)|(1<<PRTWI))
+#define __AVR_HAVE_PRR_PRADC
+#define __AVR_HAVE_PRR_PRUSART0
+#define __AVR_HAVE_PRR_PRSPI
+#define __AVR_HAVE_PRR_PRTIM1
+#define __AVR_HAVE_PRR_PRTIM0
+#define __AVR_HAVE_PRR_PRTIM2
+#define __AVR_HAVE_PRR_PRTWI
 
 #define OSCCAL _SFR_MEM8(0x66)
 #define CAL0 0
@@ -921,5 +932,11 @@
 #define SIGNATURE_1 0x94
 #define SIGNATURE_2 0x0B
 
+#define SLEEP_MODE_IDLE (0x00<<1)
+#define SLEEP_MODE_ADC (0x01<<1)
+#define SLEEP_MODE_PWR_DOWN (0x02<<1)
+#define SLEEP_MODE_PWR_SAVE (0x03<<1)
+#define SLEEP_MODE_STANDBY (0x06<<1)
+#define SLEEP_MODE_EXT_STANDBY (0x07<<1)
 
 #endif  /* _AVR_IOM168P_H_ */

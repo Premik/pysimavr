@@ -366,8 +366,8 @@
 
 /* Reserved [0x62..0x63] */
 
-#define PRR	_SFR_MEM8(0x64)  /* Datasheets: ATmega164P/324P/644P 8011D–AVR–02/07
-                                   and ATmega644 2593L–AVR–02/07.  */
+#define PRR	_SFR_MEM8(0x64)  /* Datasheets: ATmega164P/324P/644P 8011Dï¿½AVRï¿½02/07
+                                   and ATmega644 2593Lï¿½AVRï¿½02/07.  */
 #define PRR0	_SFR_MEM8(0x64)  /* AVR Studio 4.13, build 524.  */
 #define PRTWI		7
 #define PRTIM2		6
@@ -379,6 +379,22 @@
 #define PRSPI		2
 #define PRUSART0	1
 #define PRADC		0
+
+#if !defined(__AVR_ATmega644__)
+#define __AVR_HAVE_PRR0	((1<<PRADC)|(1<<PRSPI)|(1<<PRTIM1)|(1<<PRUSART0)|(1<<PRUSART1)|(1<<PRTIM0)|(1<<PRTIM2)|(1<<PRTWI))
+#else
+#define __AVR_HAVE_PRR0 ((1<<PRADC)|(1<<PRSPI)|(1<<PRTIM1)|(1<<PRUSART0)|(1<<PRTIM0)|(1<<PRTIM2)|(1<<PRTWI))
+#endif
+#define __AVR_HAVE_PRR0_PRADC
+#define __AVR_HAVE_PRR0_PRSPI
+#define __AVR_HAVE_PRR0_PRTIM1
+#define __AVR_HAVE_PRR0_PRUSART0
+#if !defined(__AVR_ATmega644__)
+#define __AVR_HAVE_PRR0_PRUSART1
+#endif
+#define __AVR_HAVE_PRR0_PRTIM0
+#define __AVR_HAVE_PRR0_PRTIM2
+#define __AVR_HAVE_PRR0_PRTWI
 
 /* Reserved [0x65] */
 

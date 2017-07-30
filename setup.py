@@ -73,7 +73,7 @@ INCLUDE_AVR = SWIG + '/include'
 PARTS = SWIG + '/parts'
 UTILS = SWIG + '/utils'
 
-EXCLUDE = ['sim_mega324.c', 'sim_mega128rfr2.c']
+EXCLUDE= []
 
 def listdir(directory, pattern):
     names = os.listdir(directory)

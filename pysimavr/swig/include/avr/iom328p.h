@@ -29,7 +29,7 @@
   POSSIBILITY OF SUCH DAMAGE. 
 */
 
-/* $Id: iom328p.h 2225 2011-03-02 16:27:26Z arcanum $ */
+/* $Id: iom328p.h 2444 2014-08-11 22:10:47Z joerg_wunsch $ */
 
 /* avr/iom328p.h - definitions for ATmega328P. */
 
@@ -339,11 +339,14 @@
 #define BODS 6
 
 #define SPMCSR _SFR_IO8(0x37)
-#define SELFPRGEN 0
+#define SELFPRGEN 0 /* only for backwards compatibility with previous
+		     * avr-libc versions; not an official name */
+#define SPMEN 0
 #define PGERS 1
 #define PGWRT 2
 #define BLBSET 3
 #define RWWSRE 4
+#define SIGRD 5
 #define RWWSB 6
 #define SPMIE 7
 
@@ -372,6 +375,15 @@
 #define PRTIM0 5
 #define PRTIM2 6
 #define PRTWI 7
+
+#define __AVR_HAVE_PRR	((1<<PRADC)|(1<<PRUSART0)|(1<<PRSPI)|(1<<PRTIM1)|(1<<PRTIM0)|(1<<PRTIM2)|(1<<PRTWI))
+#define __AVR_HAVE_PRR_PRADC
+#define __AVR_HAVE_PRR_PRUSART0
+#define __AVR_HAVE_PRR_PRSPI
+#define __AVR_HAVE_PRR_PRTIM1
+#define __AVR_HAVE_PRR_PRTIM0
+#define __AVR_HAVE_PRR_PRTIM2
+#define __AVR_HAVE_PRR_PRTWI
 
 #define OSCCAL _SFR_MEM8(0x66)
 #define CAL0 0
@@ -893,21 +905,21 @@
 #define LFUSE_DEFAULT (FUSE_CKSEL0 & FUSE_CKSEL2 & FUSE_CKSEL3 & FUSE_SUT0 & FUSE_CKDIV8)
 
 /* High Fuse Byte */
-#define FUSE_BODLEVEL0 (unsigned char)~_BV(0)  /* Brown-out Detector trigger level */
-#define FUSE_BODLEVEL1 (unsigned char)~_BV(1)  /* Brown-out Detector trigger level */
-#define FUSE_BODLEVEL2 (unsigned char)~_BV(2)  /* Brown-out Detector trigger level */
+#define FUSE_BOOTRST (unsigned char)~_BV(0)
+#define FUSE_BOOTSZ0 (unsigned char)~_BV(1)
+#define FUSE_BOOTSZ1 (unsigned char)~_BV(2)
 #define FUSE_EESAVE    (unsigned char)~_BV(3)  /* EEPROM memory is preserved through chip erase */
 #define FUSE_WDTON     (unsigned char)~_BV(4)  /* Watchdog Timer Always On */
 #define FUSE_SPIEN     (unsigned char)~_BV(5)  /* Enable Serial programming and Data Downloading */
 #define FUSE_DWEN      (unsigned char)~_BV(6)  /* debugWIRE Enable */
 #define FUSE_RSTDISBL  (unsigned char)~_BV(7)  /* External reset disable */
-#define HFUSE_DEFAULT (FUSE_SPIEN)
+#define HFUSE_DEFAULT (FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & FUSE_SPIEN)
 
 /* Extended Fuse Byte */
-#define FUSE_BOOTRST (unsigned char)~_BV(0)
-#define FUSE_BOOTSZ0 (unsigned char)~_BV(1)
-#define FUSE_BOOTSZ1 (unsigned char)~_BV(2)
-#define EFUSE_DEFAULT (FUSE_BOOTSZ0 & FUSE_BOOTSZ1)
+#define FUSE_BODLEVEL0 (unsigned char)~_BV(0)  /* Brown-out Detector trigger level */
+#define FUSE_BODLEVEL1 (unsigned char)~_BV(1)  /* Brown-out Detector trigger level */
+#define FUSE_BODLEVEL2 (unsigned char)~_BV(2)  /* Brown-out Detector trigger level */
+#define EFUSE_DEFAULT  (0xFF)
 
 
 
@@ -920,7 +932,17 @@
 /* Signature */
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x95
-#define SIGNATURE_2 0x0F
+#if defined(__AVR_ATmega328__)
+#  define SIGNATURE_2 0x14
+#else /* ATmega328P */
+#  define SIGNATURE_2 0x0F
+#endif
 
+#define SLEEP_MODE_IDLE (0x00<<1)
+#define SLEEP_MODE_ADC (0x01<<1)
+#define SLEEP_MODE_PWR_DOWN (0x02<<1)
+#define SLEEP_MODE_PWR_SAVE (0x03<<1)
+#define SLEEP_MODE_STANDBY (0x06<<1)
+#define SLEEP_MODE_EXT_STANDBY (0x07<<1)
 
 #endif  /* _AVR_IOM328P_H_ */

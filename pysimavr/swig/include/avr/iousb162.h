@@ -40,6 +40,7 @@
 
 /* Constants */
 #define SPM_PAGESIZE 128
+#define RAMSTART     0x100
 #define RAMEND       0x2FF
 #define XRAMEND      RAMEND
 #define E2END        0x1FF
@@ -91,5 +92,10 @@
 #define SIGNATURE_1 0x94
 #define SIGNATURE_2 0x82
 
+#define SLEEP_MODE_IDLE (0x00<<1)
+#define SLEEP_MODE_PWR_DOWN (0x02<<1)
+#define SLEEP_MODE_PWR_SAVE (0x03<<1)
+#define SLEEP_MODE_STANDBY (0x06<<1)
+#define SLEEP_MODE_EXT_STANDBY (0x07<<1)
 
 #endif /* _AVR_AT90USB162_H_ */
