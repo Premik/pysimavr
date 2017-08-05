@@ -2,7 +2,7 @@ from mock import Mock
 #from unittest.mock import Mock
 from pysimavr.avr import Avr
 from nose.tools import eq_
-from pysimavr.swig.simavr import cpu_Running 
+from pysimavr.swig.simavr import cpu_Running, LOG_ERROR
 import time
 
 
@@ -24,5 +24,5 @@ def test_custom_logger():
     #('atmega48 reset\n', 3)
     #('avr_sadly_crashed\n', 1)
     eq_(loggerMethod.call_count, 4, "number of callback invocations")
-    loggerMethod.assert_called_with('avr_sadly_crashed\n', 1)    
+    loggerMethod.assert_called_with('avr_sadly_crashed\n', LOG_ERROR)
     avr.terminate()
