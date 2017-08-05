@@ -177,6 +177,12 @@ IRQ_FLAG_ALLOC = _simavr.IRQ_FLAG_ALLOC
 
 _simavr.IRQ_FLAG_INIT_swigconstant(_simavr)
 IRQ_FLAG_INIT = _simavr.IRQ_FLAG_INIT
+
+_simavr.IRQ_FLAG_FLOATING_swigconstant(_simavr)
+IRQ_FLAG_FLOATING = _simavr.IRQ_FLAG_FLOATING
+
+_simavr.IRQ_FLAG_USER_swigconstant(_simavr)
+IRQ_FLAG_USER = _simavr.IRQ_FLAG_USER
 class avr_irq_pool_t(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, avr_irq_pool_t, name, value)
@@ -258,9 +264,21 @@ def avr_init_irq(pool, irq, base, count, names):
     return _simavr.avr_init_irq(pool, irq, base, count, names)
 avr_init_irq = _simavr.avr_init_irq
 
+def avr_irq_get_flags(irq):
+    return _simavr.avr_irq_get_flags(irq)
+avr_irq_get_flags = _simavr.avr_irq_get_flags
+
+def avr_irq_set_flags(irq, flags):
+    return _simavr.avr_irq_set_flags(irq, flags)
+avr_irq_set_flags = _simavr.avr_irq_set_flags
+
 def avr_raise_irq(irq, value):
     return _simavr.avr_raise_irq(irq, value)
 avr_raise_irq = _simavr.avr_raise_irq
+
+def avr_raise_irq_float(irq, value, floating):
+    return _simavr.avr_raise_irq_float(irq, value, floating)
+avr_raise_irq_float = _simavr.avr_raise_irq_float
 
 def avr_connect_irq(src, dst):
     return _simavr.avr_connect_irq(src, dst)
@@ -425,6 +443,9 @@ R_SREG = _simavr.R_SREG
 _simavr.MAX_IOs_swigconstant(_simavr)
 MAX_IOs = _simavr.MAX_IOs
 
+_simavr.LOG_NONE_swigconstant(_simavr)
+LOG_NONE = _simavr.LOG_NONE
+
 _simavr.LOG_OUTPUT_swigconstant(_simavr)
 LOG_OUTPUT = _simavr.LOG_OUTPUT
 
@@ -436,6 +457,9 @@ LOG_WARNING = _simavr.LOG_WARNING
 
 _simavr.LOG_TRACE_swigconstant(_simavr)
 LOG_TRACE = _simavr.LOG_TRACE
+
+_simavr.LOG_DEBUG_swigconstant(_simavr)
+LOG_DEBUG = _simavr.LOG_DEBUG
 
 _simavr.cpu_Limbo_swigconstant(_simavr)
 cpu_Limbo = _simavr.cpu_Limbo
@@ -522,6 +546,15 @@ class avr_trace_data_t_old(_object):
 avr_trace_data_t_old_swigregister = _simavr.avr_trace_data_t_old_swigregister
 avr_trace_data_t_old_swigregister(avr_trace_data_t_old)
 
+
+_simavr.AVR_FUSE_LOW_swigconstant(_simavr)
+AVR_FUSE_LOW = _simavr.AVR_FUSE_LOW
+
+_simavr.AVR_FUSE_HIGH_swigconstant(_simavr)
+AVR_FUSE_HIGH = _simavr.AVR_FUSE_HIGH
+
+_simavr.AVR_FUSE_EXT_swigconstant(_simavr)
+AVR_FUSE_EXT = _simavr.AVR_FUSE_EXT
 class avr_t(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, avr_t, name, value)
@@ -556,6 +589,10 @@ class avr_t(_object):
     __swig_getmethods__["fuse"] = _simavr.avr_t_fuse_get
     if _newclass:
         fuse = _swig_property(_simavr.avr_t_fuse_get, _simavr.avr_t_fuse_set)
+    __swig_setmethods__["lockbits"] = _simavr.avr_t_lockbits_set
+    __swig_getmethods__["lockbits"] = _simavr.avr_t_lockbits_get
+    if _newclass:
+        lockbits = _swig_property(_simavr.avr_t_lockbits_get, _simavr.avr_t_lockbits_set)
     __swig_setmethods__["rampz"] = _simavr.avr_t_rampz_set
     __swig_getmethods__["rampz"] = _simavr.avr_t_rampz_get
     if _newclass:
@@ -568,6 +605,9 @@ class avr_t(_object):
     __swig_getmethods__["address_size"] = _simavr.avr_t_address_size_get
     if _newclass:
         address_size = _swig_property(_simavr.avr_t_address_size_get, _simavr.avr_t_address_size_set)
+    __swig_getmethods__["reset_flags"] = _simavr.avr_t_reset_flags_get
+    if _newclass:
+        reset_flags = _swig_property(_simavr.avr_t_reset_flags_get)
     __swig_setmethods__["codeend"] = _simavr.avr_t_codeend_set
     __swig_getmethods__["codeend"] = _simavr.avr_t_codeend_get
     if _newclass:
@@ -669,6 +709,10 @@ class avr_t(_object):
     __swig_getmethods__["io_port"] = _simavr.avr_t_io_port_get
     if _newclass:
         io_port = _swig_property(_simavr.avr_t_io_port_get, _simavr.avr_t_io_port_set)
+    __swig_setmethods__["commands"] = _simavr.avr_t_commands_set
+    __swig_getmethods__["commands"] = _simavr.avr_t_commands_get
+    if _newclass:
+        commands = _swig_property(_simavr.avr_t_commands_get, _simavr.avr_t_commands_set)
     __swig_setmethods__["cycle_timers"] = _simavr.avr_t_cycle_timers_set
     __swig_getmethods__["cycle_timers"] = _simavr.avr_t_cycle_timers_get
     if _newclass:
@@ -701,6 +745,9 @@ class avr_t(_object):
     __swig_getmethods__["gdb_port"] = _simavr.avr_t_gdb_port_get
     if _newclass:
         gdb_port = _swig_property(_simavr.avr_t_gdb_port_get, _simavr.avr_t_gdb_port_set)
+    __swig_getmethods__["io_console_buffer"] = _simavr.avr_t_io_console_buffer_get
+    if _newclass:
+        io_console_buffer = _swig_property(_simavr.avr_t_io_console_buffer_get)
 
     def __init__(self):
         this = _simavr.new_avr_t()
@@ -712,6 +759,36 @@ class avr_t(_object):
     __del__ = lambda self: None
 avr_t_swigregister = _simavr.avr_t_swigregister
 avr_t_swigregister(avr_t)
+
+class avr_t_io_console_buffer(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, avr_t_io_console_buffer, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, avr_t_io_console_buffer, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["buf"] = _simavr.avr_t_io_console_buffer_buf_set
+    __swig_getmethods__["buf"] = _simavr.avr_t_io_console_buffer_buf_get
+    if _newclass:
+        buf = _swig_property(_simavr.avr_t_io_console_buffer_buf_get, _simavr.avr_t_io_console_buffer_buf_set)
+    __swig_setmethods__["size"] = _simavr.avr_t_io_console_buffer_size_set
+    __swig_getmethods__["size"] = _simavr.avr_t_io_console_buffer_size_get
+    if _newclass:
+        size = _swig_property(_simavr.avr_t_io_console_buffer_size_get, _simavr.avr_t_io_console_buffer_size_set)
+    __swig_setmethods__["len"] = _simavr.avr_t_io_console_buffer_len_set
+    __swig_getmethods__["len"] = _simavr.avr_t_io_console_buffer_len_get
+    if _newclass:
+        len = _swig_property(_simavr.avr_t_io_console_buffer_len_get, _simavr.avr_t_io_console_buffer_len_set)
+
+    def __init__(self):
+        this = _simavr.new_avr_t_io_console_buffer()
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _simavr.delete_avr_t_io_console_buffer
+    __del__ = lambda self: None
+avr_t_io_console_buffer_swigregister = _simavr.avr_t_io_console_buffer_swigregister
+avr_t_io_console_buffer_swigregister(avr_t_io_console_buffer)
 
 class avr_t_io_shared_io(_object):
     __swig_setmethods__ = {}
@@ -873,6 +950,40 @@ class avr_t_custom(_object):
     __del__ = lambda self: None
 avr_t_custom_swigregister = _simavr.avr_t_custom_swigregister
 avr_t_custom_swigregister(avr_t_custom)
+
+class avr_t_reset_flags(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, avr_t_reset_flags, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, avr_t_reset_flags, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["porf"] = _simavr.avr_t_reset_flags_porf_set
+    __swig_getmethods__["porf"] = _simavr.avr_t_reset_flags_porf_get
+    if _newclass:
+        porf = _swig_property(_simavr.avr_t_reset_flags_porf_get, _simavr.avr_t_reset_flags_porf_set)
+    __swig_setmethods__["extrf"] = _simavr.avr_t_reset_flags_extrf_set
+    __swig_getmethods__["extrf"] = _simavr.avr_t_reset_flags_extrf_get
+    if _newclass:
+        extrf = _swig_property(_simavr.avr_t_reset_flags_extrf_get, _simavr.avr_t_reset_flags_extrf_set)
+    __swig_setmethods__["borf"] = _simavr.avr_t_reset_flags_borf_set
+    __swig_getmethods__["borf"] = _simavr.avr_t_reset_flags_borf_get
+    if _newclass:
+        borf = _swig_property(_simavr.avr_t_reset_flags_borf_get, _simavr.avr_t_reset_flags_borf_set)
+    __swig_setmethods__["wdrf"] = _simavr.avr_t_reset_flags_wdrf_set
+    __swig_getmethods__["wdrf"] = _simavr.avr_t_reset_flags_wdrf_get
+    if _newclass:
+        wdrf = _swig_property(_simavr.avr_t_reset_flags_wdrf_get, _simavr.avr_t_reset_flags_wdrf_set)
+
+    def __init__(self):
+        this = _simavr.new_avr_t_reset_flags()
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _simavr.delete_avr_t_reset_flags
+    __del__ = lambda self: None
+avr_t_reset_flags_swigregister = _simavr.avr_t_reset_flags_swigregister
+avr_t_reset_flags_swigregister(avr_t_reset_flags)
 
 class avr_kind_t(_object):
     __swig_setmethods__ = {}
@@ -1331,6 +1442,18 @@ class elf_firmware_t(_object):
     __swig_getmethods__["eesize"] = _simavr.elf_firmware_t_eesize_get
     if _newclass:
         eesize = _swig_property(_simavr.elf_firmware_t_eesize_get, _simavr.elf_firmware_t_eesize_set)
+    __swig_setmethods__["fuse"] = _simavr.elf_firmware_t_fuse_set
+    __swig_getmethods__["fuse"] = _simavr.elf_firmware_t_fuse_get
+    if _newclass:
+        fuse = _swig_property(_simavr.elf_firmware_t_fuse_get, _simavr.elf_firmware_t_fuse_set)
+    __swig_setmethods__["fusesize"] = _simavr.elf_firmware_t_fusesize_set
+    __swig_getmethods__["fusesize"] = _simavr.elf_firmware_t_fusesize_get
+    if _newclass:
+        fusesize = _swig_property(_simavr.elf_firmware_t_fusesize_get, _simavr.elf_firmware_t_fusesize_set)
+    __swig_setmethods__["lockbits"] = _simavr.elf_firmware_t_lockbits_set
+    __swig_getmethods__["lockbits"] = _simavr.elf_firmware_t_lockbits_get
+    if _newclass:
+        lockbits = _swig_property(_simavr.elf_firmware_t_lockbits_get, _simavr.elf_firmware_t_lockbits_set)
     __swig_setmethods__["symbol"] = _simavr.elf_firmware_t_symbol_set
     __swig_getmethods__["symbol"] = _simavr.elf_firmware_t_symbol_get
     if _newclass:
@@ -1387,6 +1510,10 @@ class elf_firmware_t_trace(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, elf_firmware_t_trace, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["kind"] = _simavr.elf_firmware_t_trace_kind_set
+    __swig_getmethods__["kind"] = _simavr.elf_firmware_t_trace_kind_get
+    if _newclass:
+        kind = _swig_property(_simavr.elf_firmware_t_trace_kind_get, _simavr.elf_firmware_t_trace_kind_set)
     __swig_setmethods__["mask"] = _simavr.elf_firmware_t_trace_mask_set
     __swig_getmethods__["mask"] = _simavr.elf_firmware_t_trace_mask_get
     if _newclass:
@@ -1497,10 +1624,14 @@ class avr_vcd_log_t(_object):
     __swig_getmethods__["when"] = _simavr.avr_vcd_log_t_when_get
     if _newclass:
         when = _swig_property(_simavr.avr_vcd_log_t_when_get, _simavr.avr_vcd_log_t_when_set)
-    __swig_setmethods__["signal"] = _simavr.avr_vcd_log_t_signal_set
-    __swig_getmethods__["signal"] = _simavr.avr_vcd_log_t_signal_get
+    __swig_setmethods__["sigindex"] = _simavr.avr_vcd_log_t_sigindex_set
+    __swig_getmethods__["sigindex"] = _simavr.avr_vcd_log_t_sigindex_get
     if _newclass:
-        signal = _swig_property(_simavr.avr_vcd_log_t_signal_get, _simavr.avr_vcd_log_t_signal_set)
+        sigindex = _swig_property(_simavr.avr_vcd_log_t_sigindex_get, _simavr.avr_vcd_log_t_sigindex_set)
+    __swig_setmethods__["floating"] = _simavr.avr_vcd_log_t_floating_set
+    __swig_getmethods__["floating"] = _simavr.avr_vcd_log_t_floating_get
+    if _newclass:
+        floating = _swig_property(_simavr.avr_vcd_log_t_floating_get, _simavr.avr_vcd_log_t_floating_set)
     __swig_setmethods__["value"] = _simavr.avr_vcd_log_t_value_set
     __swig_getmethods__["value"] = _simavr.avr_vcd_log_t_value_get
     if _newclass:
@@ -1516,6 +1647,46 @@ class avr_vcd_log_t(_object):
     __del__ = lambda self: None
 avr_vcd_log_t_swigregister = _simavr.avr_vcd_log_t_swigregister
 avr_vcd_log_t_swigregister(avr_vcd_log_t)
+
+
+_simavr.avr_vcd_fifo_overflow_f_swigconstant(_simavr)
+avr_vcd_fifo_overflow_f = _simavr.avr_vcd_fifo_overflow_f
+
+_simavr.avr_vcd_fifo_fifo_size_swigconstant(_simavr)
+avr_vcd_fifo_fifo_size = _simavr.avr_vcd_fifo_fifo_size
+class avr_vcd_fifo_t(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, avr_vcd_fifo_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, avr_vcd_fifo_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["buffer"] = _simavr.avr_vcd_fifo_t_buffer_set
+    __swig_getmethods__["buffer"] = _simavr.avr_vcd_fifo_t_buffer_get
+    if _newclass:
+        buffer = _swig_property(_simavr.avr_vcd_fifo_t_buffer_get, _simavr.avr_vcd_fifo_t_buffer_set)
+    __swig_setmethods__["read"] = _simavr.avr_vcd_fifo_t_read_set
+    __swig_getmethods__["read"] = _simavr.avr_vcd_fifo_t_read_get
+    if _newclass:
+        read = _swig_property(_simavr.avr_vcd_fifo_t_read_get, _simavr.avr_vcd_fifo_t_read_set)
+    __swig_setmethods__["write"] = _simavr.avr_vcd_fifo_t_write_set
+    __swig_getmethods__["write"] = _simavr.avr_vcd_fifo_t_write_get
+    if _newclass:
+        write = _swig_property(_simavr.avr_vcd_fifo_t_write_get, _simavr.avr_vcd_fifo_t_write_set)
+    __swig_setmethods__["flags"] = _simavr.avr_vcd_fifo_t_flags_set
+    __swig_getmethods__["flags"] = _simavr.avr_vcd_fifo_t_flags_get
+    if _newclass:
+        flags = _swig_property(_simavr.avr_vcd_fifo_t_flags_get, _simavr.avr_vcd_fifo_t_flags_set)
+
+    def __init__(self):
+        this = _simavr.new_avr_vcd_fifo_t()
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _simavr.delete_avr_vcd_fifo_t
+    __del__ = lambda self: None
+avr_vcd_fifo_t_swigregister = _simavr.avr_vcd_fifo_t_swigregister
+avr_vcd_fifo_t_swigregister(avr_vcd_fifo_t)
 
 class avr_vcd_t(_object):
     __swig_setmethods__ = {}
@@ -1535,6 +1706,14 @@ class avr_vcd_t(_object):
     __swig_getmethods__["output"] = _simavr.avr_vcd_t_output_get
     if _newclass:
         output = _swig_property(_simavr.avr_vcd_t_output_get, _simavr.avr_vcd_t_output_set)
+    __swig_setmethods__["input"] = _simavr.avr_vcd_t_input_set
+    __swig_getmethods__["input"] = _simavr.avr_vcd_t_input_get
+    if _newclass:
+        input = _swig_property(_simavr.avr_vcd_t_input_get, _simavr.avr_vcd_t_input_set)
+    __swig_setmethods__["input_line"] = _simavr.avr_vcd_t_input_line_set
+    __swig_getmethods__["input_line"] = _simavr.avr_vcd_t_input_line_get
+    if _newclass:
+        input_line = _swig_property(_simavr.avr_vcd_t_input_line_get, _simavr.avr_vcd_t_input_line_set)
     __swig_setmethods__["signal_count"] = _simavr.avr_vcd_t_signal_count_set
     __swig_getmethods__["signal_count"] = _simavr.avr_vcd_t_signal_count_get
     if _newclass:
@@ -1543,22 +1722,18 @@ class avr_vcd_t(_object):
     __swig_getmethods__["signal"] = _simavr.avr_vcd_t_signal_get
     if _newclass:
         signal = _swig_property(_simavr.avr_vcd_t_signal_get, _simavr.avr_vcd_t_signal_set)
-    __swig_setmethods__["period"] = _simavr.avr_vcd_t_period_set
-    __swig_getmethods__["period"] = _simavr.avr_vcd_t_period_get
-    if _newclass:
-        period = _swig_property(_simavr.avr_vcd_t_period_get, _simavr.avr_vcd_t_period_set)
     __swig_setmethods__["start"] = _simavr.avr_vcd_t_start_set
     __swig_getmethods__["start"] = _simavr.avr_vcd_t_start_get
     if _newclass:
         start = _swig_property(_simavr.avr_vcd_t_start_get, _simavr.avr_vcd_t_start_set)
-    __swig_setmethods__["logsize"] = _simavr.avr_vcd_t_logsize_set
-    __swig_getmethods__["logsize"] = _simavr.avr_vcd_t_logsize_get
+    __swig_setmethods__["period"] = _simavr.avr_vcd_t_period_set
+    __swig_getmethods__["period"] = _simavr.avr_vcd_t_period_get
     if _newclass:
-        logsize = _swig_property(_simavr.avr_vcd_t_logsize_get, _simavr.avr_vcd_t_logsize_set)
-    __swig_setmethods__["logindex"] = _simavr.avr_vcd_t_logindex_set
-    __swig_getmethods__["logindex"] = _simavr.avr_vcd_t_logindex_get
+        period = _swig_property(_simavr.avr_vcd_t_period_get, _simavr.avr_vcd_t_period_set)
+    __swig_setmethods__["vcd_to_us"] = _simavr.avr_vcd_t_vcd_to_us_set
+    __swig_getmethods__["vcd_to_us"] = _simavr.avr_vcd_t_vcd_to_us_get
     if _newclass:
-        logindex = _swig_property(_simavr.avr_vcd_t_logindex_get, _simavr.avr_vcd_t_logindex_set)
+        vcd_to_us = _swig_property(_simavr.avr_vcd_t_vcd_to_us_get, _simavr.avr_vcd_t_vcd_to_us_set)
     __swig_setmethods__["log"] = _simavr.avr_vcd_t_log_set
     __swig_getmethods__["log"] = _simavr.avr_vcd_t_log_get
     if _newclass:
@@ -1579,6 +1754,10 @@ avr_vcd_t_swigregister(avr_vcd_t)
 def avr_vcd_init(avr, filename, vcd, period):
     return _simavr.avr_vcd_init(avr, filename, vcd, period)
 avr_vcd_init = _simavr.avr_vcd_init
+
+def avr_vcd_init_input(avr, filename, vcd):
+    return _simavr.avr_vcd_init_input(avr, filename, vcd)
+avr_vcd_init_input = _simavr.avr_vcd_init_input
 
 def avr_vcd_close(vcd):
     return _simavr.avr_vcd_close(vcd)

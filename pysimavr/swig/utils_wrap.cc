@@ -4086,6 +4086,53 @@ SWIG_From_char  (char c)
 }
 
 
+/* Getting isfinite working pre C99 across multiple platforms is non-trivial. Users can provide SWIG_isfinite on older platforms. */
+#ifndef SWIG_isfinite
+# if defined(isfinite)
+#  define SWIG_isfinite(X) (isfinite(X))
+# elif defined(_MSC_VER)
+#  define SWIG_isfinite(X) (_finite(X))
+# elif defined(__sun) && defined(__SVR4)
+#  include <ieeefp.h>
+#  define SWIG_isfinite(X) (finite(X))
+# endif
+#endif
+
+
+/* Accept infinite as a valid float value unless we are unable to check if a value is finite */
+#ifdef SWIG_isfinite
+# define SWIG_Float_Overflow_Check(X) ((X < -FLT_MAX || X > FLT_MAX) && SWIG_isfinite(X))
+#else
+# define SWIG_Float_Overflow_Check(X) ((X < -FLT_MAX || X > FLT_MAX))
+#endif
+
+
+SWIGINTERN int
+SWIG_AsVal_float (PyObject * obj, float *val)
+{
+  double v;
+  int res = SWIG_AsVal_double (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if (SWIG_Float_Overflow_Check(v)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< float >(v);
+    }
+  }  
+  return res;
+}
+
+
+  #define SWIG_From_double   PyFloat_FromDouble 
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_float  (float value)
+{    
+  return SWIG_From_double  (value);
+}
+
+
 
 /* ---------------------------------------------------
  * C++ director class methods
@@ -9269,6 +9316,118 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_avr_extint_is_strict_lvl_trig(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_t *arg1 = (avr_t *) 0 ;
+  uint8_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_extint_is_strict_lvl_trig",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_extint_is_strict_lvl_trig" "', argument " "1"" of type '" "avr_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_uint8_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_extint_is_strict_lvl_trig" "', argument " "2"" of type '" "uint8_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_extint_is_strict_lvl_trig" "', argument " "2"" of type '" "uint8_t""'");
+    } else {
+      uint8_t * temp = reinterpret_cast< uint8_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    if (!arg1) {
+      SWIG_exception(SWIG_ValueError,"Received a NULL pointer.");
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result = (int)avr_extint_is_strict_lvl_trig(arg1,arg2);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_extint_set_strict_lvl_trig(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_t *arg1 = (avr_t *) 0 ;
+  uint8_t arg2 ;
+  uint8_t arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:avr_extint_set_strict_lvl_trig",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_extint_set_strict_lvl_trig" "', argument " "1"" of type '" "avr_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_uint8_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_extint_set_strict_lvl_trig" "', argument " "2"" of type '" "uint8_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_extint_set_strict_lvl_trig" "', argument " "2"" of type '" "uint8_t""'");
+    } else {
+      uint8_t * temp = reinterpret_cast< uint8_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_uint8_t,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "avr_extint_set_strict_lvl_trig" "', argument " "3"" of type '" "uint8_t""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_extint_set_strict_lvl_trig" "', argument " "3"" of type '" "uint8_t""'");
+    } else {
+      uint8_t * temp = reinterpret_cast< uint8_t * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  {
+    if (!arg1) {
+      SWIG_exception(SWIG_ValueError,"Received a NULL pointer.");
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    avr_extint_set_strict_lvl_trig(arg1,arg2,arg3);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_avr_flash_t_io_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_flash_t *arg1 = (avr_flash_t *) 0 ;
@@ -12759,6 +12918,17 @@ SWIGINTERN PyObject *TIMER_IRQ_OUT_PWM1_swigconstant(PyObject *SWIGUNUSEDPARM(se
 }
 
 
+SWIGINTERN PyObject *TIMER_IRQ_IN_ICP_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "TIMER_IRQ_IN_ICP",SWIG_From_int(static_cast< int >(TIMER_IRQ_IN_ICP)));
+  return SWIG_Py_Void();
+}
+
+
 SWIGINTERN PyObject *TIMER_IRQ_OUT_COMP_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *module;
   PyObject *d;
@@ -13212,6 +13382,83 @@ SWIGINTERN PyObject *avr_timer_wgm_t_swigregister(PyObject *SWIGUNUSEDPARM(self)
   SWIG_TypeNewClientData(SWIGTYPE_p_avr_timer_wgm_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_CHOOSE_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_CHOOSE",SWIG_From_int(static_cast< int >(0x80)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_TN_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_TN",SWIG_From_int(static_cast< int >(0x80)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_STARTED_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_STARTED",SWIG_From_int(static_cast< int >(0x40)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_REVDIR_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_REVDIR",SWIG_From_int(static_cast< int >(0x20)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_AS2_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_AS2",SWIG_From_int(static_cast< int >(0x10)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_VIRT_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_VIRT",SWIG_From_int(static_cast< int >(0x08)));
+  return SWIG_Py_Void();
+}
+
+
+SWIGINTERN PyObject *AVR_TIMER_EXTCLK_FLAG_EDGE_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_TIMER_EXTCLK_FLAG_EDGE",SWIG_From_int(static_cast< int >(0x01)));
+  return SWIG_Py_Void();
+}
+
 
 SWIGINTERN PyObject *_wrap_avr_timer_comp_t_interrupt_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
@@ -14829,7 +15076,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_clock_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_value_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_timer_t *arg1 = (avr_timer_t *) 0 ;
   uint32_t arg2 ;
@@ -14840,20 +15087,20 @@ SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_clock_set(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_cs_div_clock_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_cs_div_value_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_cs_div_clock_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_cs_div_value_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
   }
   arg1 = reinterpret_cast< avr_timer_t * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_timer_t_cs_div_clock_set" "', argument " "2"" of type '" "uint32_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_timer_t_cs_div_value_set" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
   {
     SWIG_PYTHON_THREAD_BEGIN_ALLOW;
-    if (arg1) (arg1)->cs_div_clock = arg2;
+    if (arg1) (arg1)->cs_div_value = arg2;
     SWIG_PYTHON_THREAD_END_ALLOW;
   }
   resultobj = SWIG_Py_Void();
@@ -14863,7 +15110,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_clock_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_value_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_timer_t *arg1 = (avr_timer_t *) 0 ;
   void *argp1 = 0 ;
@@ -14871,18 +15118,214 @@ SWIGINTERN PyObject *_wrap_avr_timer_t_cs_div_clock_get(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   uint32_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_cs_div_clock_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_cs_div_value_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_cs_div_clock_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_cs_div_value_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
   }
   arg1 = reinterpret_cast< avr_timer_t * >(argp1);
   {
     SWIG_PYTHON_THREAD_BEGIN_ALLOW;
-    result =  ((arg1)->cs_div_clock);
+    result =  ((arg1)->cs_div_value);
     SWIG_PYTHON_THREAD_END_ALLOW;
   }
   resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_pin_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  avr_regbit_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_ext_clock_pin_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_pin_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_avr_regbit_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_timer_t_ext_clock_pin_set" "', argument " "2"" of type '" "avr_regbit_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_timer_t_ext_clock_pin_set" "', argument " "2"" of type '" "avr_regbit_t""'");
+    } else {
+      avr_regbit_t * temp = reinterpret_cast< avr_regbit_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->ext_clock_pin = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_pin_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_regbit_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_ext_clock_pin_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_pin_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->ext_clock_pin);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new avr_regbit_t(static_cast< const avr_regbit_t& >(result))), SWIGTYPE_p_avr_regbit_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_flags_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  uint8_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_ext_clock_flags_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_flags_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_uint8_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_timer_t_ext_clock_flags_set" "', argument " "2"" of type '" "uint8_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_timer_t_ext_clock_flags_set" "', argument " "2"" of type '" "uint8_t""'");
+    } else {
+      uint8_t * temp = reinterpret_cast< uint8_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->ext_clock_flags = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_flags_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint8_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_ext_clock_flags_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_flags_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->ext_clock_flags);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new uint8_t(static_cast< const uint8_t& >(result))), SWIGTYPE_p_uint8_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  float arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_ext_clock_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_timer_t_ext_clock_set" "', argument " "2"" of type '" "float""'");
+  } 
+  arg2 = static_cast< float >(val2);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->ext_clock = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_ext_clock_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  float result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_ext_clock_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_ext_clock_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result = (float) ((arg1)->ext_clock);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_float(static_cast< float >(result));
   return resultobj;
 fail:
   return NULL;
@@ -15290,6 +15733,126 @@ SWIGINTERN PyObject *_wrap_avr_timer_t_tov_cycles_get(PyObject *SWIGUNUSEDPARM(s
     SWIG_PYTHON_THREAD_END_ALLOW;
   }
   resultobj = SWIG_NewPointerObj((new uint64_t(static_cast< const uint64_t& >(result))), SWIGTYPE_p_uint64_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_tov_cycles_fract_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  float arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_tov_cycles_fract_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_tov_cycles_fract_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_timer_t_tov_cycles_fract_set" "', argument " "2"" of type '" "float""'");
+  } 
+  arg2 = static_cast< float >(val2);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->tov_cycles_fract = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_tov_cycles_fract_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  float result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_tov_cycles_fract_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_tov_cycles_fract_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result = (float) ((arg1)->tov_cycles_fract);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_float(static_cast< float >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_phase_accumulator_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  float arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_timer_t_phase_accumulator_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_phase_accumulator_set" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_timer_t_phase_accumulator_set" "', argument " "2"" of type '" "float""'");
+  } 
+  arg2 = static_cast< float >(val2);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->phase_accumulator = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_timer_t_phase_accumulator_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_timer_t *arg1 = (avr_timer_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  float result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_timer_t_phase_accumulator_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_timer_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_timer_t_phase_accumulator_get" "', argument " "1"" of type '" "avr_timer_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_timer_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result = (float) ((arg1)->phase_accumulator);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_float(static_cast< float >(result));
   return resultobj;
 fail:
   return NULL;
@@ -17895,6 +18458,17 @@ SWIGINTERN PyObject *AVR_UART_FLAG_POOL_SLEEP_swigconstant(PyObject *SWIGUNUSEDP
 }
 
 
+SWIGINTERN PyObject *AVR_UART_FLAG_POLL_SLEEP_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *module;
+  PyObject *d;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigconstant", &module)) return NULL;
+  d = PyModule_GetDict(module);
+  if (!d) return NULL;
+  SWIG_Python_SetConstant(d, "AVR_UART_FLAG_POLL_SLEEP",SWIG_From_int(static_cast< int >(AVR_UART_FLAG_POLL_SLEEP)));
+  return SWIG_Py_Void();
+}
+
+
 SWIGINTERN PyObject *AVR_UART_FLAG_STDIO_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *module;
   PyObject *d;
@@ -18782,6 +19356,278 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_avr_uart_t_fe_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  avr_regbit_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_fe_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_fe_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_avr_regbit_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_uart_t_fe_set" "', argument " "2"" of type '" "avr_regbit_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_uart_t_fe_set" "', argument " "2"" of type '" "avr_regbit_t""'");
+    } else {
+      avr_regbit_t * temp = reinterpret_cast< avr_regbit_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->fe = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_fe_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_regbit_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_fe_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_fe_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->fe);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new avr_regbit_t(static_cast< const avr_regbit_t& >(result))), SWIGTYPE_p_avr_regbit_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_dor_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  avr_regbit_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_dor_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_dor_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_avr_regbit_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_uart_t_dor_set" "', argument " "2"" of type '" "avr_regbit_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_uart_t_dor_set" "', argument " "2"" of type '" "avr_regbit_t""'");
+    } else {
+      avr_regbit_t * temp = reinterpret_cast< avr_regbit_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->dor = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_dor_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_regbit_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_dor_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_dor_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->dor);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new avr_regbit_t(static_cast< const avr_regbit_t& >(result))), SWIGTYPE_p_avr_regbit_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_upe_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  avr_regbit_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_upe_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_upe_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_avr_regbit_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_uart_t_upe_set" "', argument " "2"" of type '" "avr_regbit_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_uart_t_upe_set" "', argument " "2"" of type '" "avr_regbit_t""'");
+    } else {
+      avr_regbit_t * temp = reinterpret_cast< avr_regbit_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->upe = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_upe_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_regbit_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_upe_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_upe_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->upe);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new avr_regbit_t(static_cast< const avr_regbit_t& >(result))), SWIGTYPE_p_avr_regbit_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rxb8_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  avr_regbit_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_rxb8_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rxb8_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_avr_regbit_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_uart_t_rxb8_set" "', argument " "2"" of type '" "avr_regbit_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_uart_t_rxb8_set" "', argument " "2"" of type '" "avr_regbit_t""'");
+    } else {
+      avr_regbit_t * temp = reinterpret_cast< avr_regbit_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->rxb8 = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rxb8_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_regbit_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_rxb8_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rxb8_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->rxb8);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new avr_regbit_t(static_cast< const avr_regbit_t& >(result))), SWIGTYPE_p_avr_regbit_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_avr_uart_t_r_ubrrl_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_uart_t *arg1 = (avr_uart_t *) 0 ;
@@ -19182,6 +20028,134 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_avr_uart_t_tx_cnt_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  uint8_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_tx_cnt_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_tx_cnt_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_uint8_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "avr_uart_t_tx_cnt_set" "', argument " "2"" of type '" "uint8_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "avr_uart_t_tx_cnt_set" "', argument " "2"" of type '" "uint8_t""'");
+    } else {
+      uint8_t * temp = reinterpret_cast< uint8_t * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->tx_cnt = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_tx_cnt_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint8_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_tx_cnt_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_tx_cnt_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->tx_cnt);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_NewPointerObj((new uint8_t(static_cast< const uint8_t& >(result))), SWIGTYPE_p_uint8_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rx_cnt_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  uint32_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_rx_cnt_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rx_cnt_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_uart_t_rx_cnt_set" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->rx_cnt = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rx_cnt_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_rx_cnt_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rx_cnt_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->rx_cnt);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_avr_uart_t_flags_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_uart_t *arg1 = (avr_uart_t *) 0 ;
@@ -19242,7 +20216,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_avr_uart_t_usec_per_byte_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_avr_uart_t_cycles_per_byte_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_uart_t *arg1 = (avr_uart_t *) 0 ;
   avr_cycle_count_t arg2 ;
@@ -19253,20 +20227,20 @@ SWIGINTERN PyObject *_wrap_avr_uart_t_usec_per_byte_set(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_usec_per_byte_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_cycles_per_byte_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_usec_per_byte_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_cycles_per_byte_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
   }
   arg1 = reinterpret_cast< avr_uart_t * >(argp1);
   ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_uart_t_usec_per_byte_set" "', argument " "2"" of type '" "avr_cycle_count_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_uart_t_cycles_per_byte_set" "', argument " "2"" of type '" "avr_cycle_count_t""'");
   } 
   arg2 = static_cast< avr_cycle_count_t >(val2);
   {
     SWIG_PYTHON_THREAD_BEGIN_ALLOW;
-    if (arg1) (arg1)->usec_per_byte = arg2;
+    if (arg1) (arg1)->cycles_per_byte = arg2;
     SWIG_PYTHON_THREAD_END_ALLOW;
   }
   resultobj = SWIG_Py_Void();
@@ -19276,7 +20250,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_avr_uart_t_usec_per_byte_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_avr_uart_t_cycles_per_byte_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   avr_uart_t *arg1 = (avr_uart_t *) 0 ;
   void *argp1 = 0 ;
@@ -19284,15 +20258,75 @@ SWIGINTERN PyObject *_wrap_avr_uart_t_usec_per_byte_get(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   avr_cycle_count_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_usec_per_byte_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_cycles_per_byte_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_usec_per_byte_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_cycles_per_byte_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
   }
   arg1 = reinterpret_cast< avr_uart_t * >(argp1);
   {
     SWIG_PYTHON_THREAD_BEGIN_ALLOW;
-    result =  ((arg1)->usec_per_byte);
+    result =  ((arg1)->cycles_per_byte);
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rxc_raise_time_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  avr_cycle_count_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:avr_uart_t_rxc_raise_time_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rxc_raise_time_set" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "avr_uart_t_rxc_raise_time_set" "', argument " "2"" of type '" "avr_cycle_count_t""'");
+  } 
+  arg2 = static_cast< avr_cycle_count_t >(val2);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    if (arg1) (arg1)->rxc_raise_time = arg2;
+    SWIG_PYTHON_THREAD_END_ALLOW;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_avr_uart_t_rxc_raise_time_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  avr_uart_t *arg1 = (avr_uart_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  avr_cycle_count_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:avr_uart_t_rxc_raise_time_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_avr_uart_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "avr_uart_t_rxc_raise_time_get" "', argument " "1"" of type '" "avr_uart_t *""'"); 
+  }
+  arg1 = reinterpret_cast< avr_uart_t * >(argp1);
+  {
+    SWIG_PYTHON_THREAD_BEGIN_ALLOW;
+    result =  ((arg1)->rxc_raise_time);
     SWIG_PYTHON_THREAD_END_ALLOW;
   }
   resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
@@ -21253,6 +22287,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_avr_extint_t", _wrap_delete_avr_extint_t, METH_VARARGS, NULL},
 	 { (char *)"avr_extint_t_swigregister", avr_extint_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"avr_extint_init", _wrap_avr_extint_init, METH_VARARGS, NULL},
+	 { (char *)"avr_extint_is_strict_lvl_trig", _wrap_avr_extint_is_strict_lvl_trig, METH_VARARGS, NULL},
+	 { (char *)"avr_extint_set_strict_lvl_trig", _wrap_avr_extint_set_strict_lvl_trig, METH_VARARGS, NULL},
 	 { (char *)"avr_flash_t_io_set", _wrap_avr_flash_t_io_set, METH_VARARGS, NULL},
 	 { (char *)"avr_flash_t_io_get", _wrap_avr_flash_t_io_get, METH_VARARGS, NULL},
 	 { (char *)"avr_flash_t_flags_set", _wrap_avr_flash_t_flags_set, METH_VARARGS, NULL},
@@ -21385,6 +22421,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AVR_TIMER_COMP_COUNT_swigconstant", AVR_TIMER_COMP_COUNT_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"TIMER_IRQ_OUT_PWM0_swigconstant", TIMER_IRQ_OUT_PWM0_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"TIMER_IRQ_OUT_PWM1_swigconstant", TIMER_IRQ_OUT_PWM1_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"TIMER_IRQ_IN_ICP_swigconstant", TIMER_IRQ_IN_ICP_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"TIMER_IRQ_OUT_COMP_swigconstant", TIMER_IRQ_OUT_COMP_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"TIMER_IRQ_COUNT_swigconstant", TIMER_IRQ_COUNT_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_wgm_none_swigconstant", avr_timer_wgm_none_swigconstant, METH_VARARGS, NULL},
@@ -21411,6 +22448,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_avr_timer_wgm_t", _wrap_new_avr_timer_wgm_t, METH_VARARGS, NULL},
 	 { (char *)"delete_avr_timer_wgm_t", _wrap_delete_avr_timer_wgm_t, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_wgm_t_swigregister", avr_timer_wgm_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_CHOOSE_swigconstant", AVR_TIMER_EXTCLK_CHOOSE_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_TN_swigconstant", AVR_TIMER_EXTCLK_FLAG_TN_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_STARTED_swigconstant", AVR_TIMER_EXTCLK_FLAG_STARTED_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_REVDIR_swigconstant", AVR_TIMER_EXTCLK_FLAG_REVDIR_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_AS2_swigconstant", AVR_TIMER_EXTCLK_FLAG_AS2_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_VIRT_swigconstant", AVR_TIMER_EXTCLK_FLAG_VIRT_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_TIMER_EXTCLK_FLAG_EDGE_swigconstant", AVR_TIMER_EXTCLK_FLAG_EDGE_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_comp_t_interrupt_set", _wrap_avr_timer_comp_t_interrupt_set, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_comp_t_interrupt_get", _wrap_avr_timer_comp_t_interrupt_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_comp_t_timer_set", _wrap_avr_timer_comp_t_timer_set, METH_VARARGS, NULL},
@@ -21465,8 +22509,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"avr_timer_t_cs_get", _wrap_avr_timer_t_cs_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_cs_div_set", _wrap_avr_timer_t_cs_div_set, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_cs_div_get", _wrap_avr_timer_t_cs_div_get, METH_VARARGS, NULL},
-	 { (char *)"avr_timer_t_cs_div_clock_set", _wrap_avr_timer_t_cs_div_clock_set, METH_VARARGS, NULL},
-	 { (char *)"avr_timer_t_cs_div_clock_get", _wrap_avr_timer_t_cs_div_clock_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_cs_div_value_set", _wrap_avr_timer_t_cs_div_value_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_cs_div_value_get", _wrap_avr_timer_t_cs_div_value_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_pin_set", _wrap_avr_timer_t_ext_clock_pin_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_pin_get", _wrap_avr_timer_t_ext_clock_pin_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_flags_set", _wrap_avr_timer_t_ext_clock_flags_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_flags_get", _wrap_avr_timer_t_ext_clock_flags_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_set", _wrap_avr_timer_t_ext_clock_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_ext_clock_get", _wrap_avr_timer_t_ext_clock_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_icp_set", _wrap_avr_timer_t_icp_set, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_icp_get", _wrap_avr_timer_t_icp_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_ices_set", _wrap_avr_timer_t_ices_set, METH_VARARGS, NULL},
@@ -21479,6 +22529,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"avr_timer_t_icr_get", _wrap_avr_timer_t_icr_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_tov_cycles_set", _wrap_avr_timer_t_tov_cycles_set, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_tov_cycles_get", _wrap_avr_timer_t_tov_cycles_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_tov_cycles_fract_set", _wrap_avr_timer_t_tov_cycles_fract_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_tov_cycles_fract_get", _wrap_avr_timer_t_tov_cycles_fract_get, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_phase_accumulator_set", _wrap_avr_timer_t_phase_accumulator_set, METH_VARARGS, NULL},
+	 { (char *)"avr_timer_t_phase_accumulator_get", _wrap_avr_timer_t_phase_accumulator_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_tov_base_set", _wrap_avr_timer_t_tov_base_set, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_tov_base_get", _wrap_avr_timer_t_tov_base_get, METH_VARARGS, NULL},
 	 { (char *)"avr_timer_t_tov_top_set", _wrap_avr_timer_t_tov_top_set, METH_VARARGS, NULL},
@@ -21576,6 +22630,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"UART_IRQ_OUT_XOFF_swigconstant", UART_IRQ_OUT_XOFF_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"UART_IRQ_COUNT_swigconstant", UART_IRQ_COUNT_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"AVR_UART_FLAG_POOL_SLEEP_swigconstant", AVR_UART_FLAG_POOL_SLEEP_swigconstant, METH_VARARGS, NULL},
+	 { (char *)"AVR_UART_FLAG_POLL_SLEEP_swigconstant", AVR_UART_FLAG_POLL_SLEEP_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"AVR_UART_FLAG_STDIO_swigconstant", AVR_UART_FLAG_STDIO_swigconstant, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_io_set", _wrap_avr_uart_t_io_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_io_get", _wrap_avr_uart_t_io_get, METH_VARARGS, NULL},
@@ -21603,6 +22658,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"avr_uart_t_ucsz_get", _wrap_avr_uart_t_ucsz_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_ucsz2_set", _wrap_avr_uart_t_ucsz2_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_ucsz2_get", _wrap_avr_uart_t_ucsz2_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_fe_set", _wrap_avr_uart_t_fe_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_fe_get", _wrap_avr_uart_t_fe_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_dor_set", _wrap_avr_uart_t_dor_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_dor_get", _wrap_avr_uart_t_dor_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_upe_set", _wrap_avr_uart_t_upe_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_upe_get", _wrap_avr_uart_t_upe_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rxb8_set", _wrap_avr_uart_t_rxb8_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rxb8_get", _wrap_avr_uart_t_rxb8_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_r_ubrrl_set", _wrap_avr_uart_t_r_ubrrl_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_r_ubrrl_get", _wrap_avr_uart_t_r_ubrrl_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_r_ubrrh_set", _wrap_avr_uart_t_r_ubrrh_set, METH_VARARGS, NULL},
@@ -21615,10 +22678,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"avr_uart_t_udrc_get", _wrap_avr_uart_t_udrc_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_input_set", _wrap_avr_uart_t_input_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_input_get", _wrap_avr_uart_t_input_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_tx_cnt_set", _wrap_avr_uart_t_tx_cnt_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_tx_cnt_get", _wrap_avr_uart_t_tx_cnt_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rx_cnt_set", _wrap_avr_uart_t_rx_cnt_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rx_cnt_get", _wrap_avr_uart_t_rx_cnt_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_flags_set", _wrap_avr_uart_t_flags_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_flags_get", _wrap_avr_uart_t_flags_get, METH_VARARGS, NULL},
-	 { (char *)"avr_uart_t_usec_per_byte_set", _wrap_avr_uart_t_usec_per_byte_set, METH_VARARGS, NULL},
-	 { (char *)"avr_uart_t_usec_per_byte_get", _wrap_avr_uart_t_usec_per_byte_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_cycles_per_byte_set", _wrap_avr_uart_t_cycles_per_byte_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_cycles_per_byte_get", _wrap_avr_uart_t_cycles_per_byte_get, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rxc_raise_time_set", _wrap_avr_uart_t_rxc_raise_time_set, METH_VARARGS, NULL},
+	 { (char *)"avr_uart_t_rxc_raise_time_get", _wrap_avr_uart_t_rxc_raise_time_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_stdio_out_set", _wrap_avr_uart_t_stdio_out_set, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_stdio_out_get", _wrap_avr_uart_t_stdio_out_get, METH_VARARGS, NULL},
 	 { (char *)"avr_uart_t_stdio_len_set", _wrap_avr_uart_t_stdio_len_set, METH_VARARGS, NULL},

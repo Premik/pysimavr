@@ -740,6 +740,14 @@ avr_extint_t_swigregister(avr_extint_t)
 def avr_extint_init(avr, p):
     return _utils.avr_extint_init(avr, p)
 avr_extint_init = _utils.avr_extint_init
+
+def avr_extint_is_strict_lvl_trig(avr, extint_no):
+    return _utils.avr_extint_is_strict_lvl_trig(avr, extint_no)
+avr_extint_is_strict_lvl_trig = _utils.avr_extint_is_strict_lvl_trig
+
+def avr_extint_set_strict_lvl_trig(avr, extint_no, strict):
+    return _utils.avr_extint_set_strict_lvl_trig(avr, extint_no, strict)
+avr_extint_set_strict_lvl_trig = _utils.avr_extint_set_strict_lvl_trig
 class avr_flash_t(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, avr_flash_t, name, value)
@@ -1119,6 +1127,9 @@ TIMER_IRQ_OUT_PWM0 = _utils.TIMER_IRQ_OUT_PWM0
 _utils.TIMER_IRQ_OUT_PWM1_swigconstant(_utils)
 TIMER_IRQ_OUT_PWM1 = _utils.TIMER_IRQ_OUT_PWM1
 
+_utils.TIMER_IRQ_IN_ICP_swigconstant(_utils)
+TIMER_IRQ_IN_ICP = _utils.TIMER_IRQ_IN_ICP
+
 _utils.TIMER_IRQ_OUT_COMP_swigconstant(_utils)
 TIMER_IRQ_OUT_COMP = _utils.TIMER_IRQ_OUT_COMP
 
@@ -1197,6 +1208,27 @@ class avr_timer_wgm_t(_object):
 avr_timer_wgm_t_swigregister = _utils.avr_timer_wgm_t_swigregister
 avr_timer_wgm_t_swigregister(avr_timer_wgm_t)
 
+
+_utils.AVR_TIMER_EXTCLK_CHOOSE_swigconstant(_utils)
+AVR_TIMER_EXTCLK_CHOOSE = _utils.AVR_TIMER_EXTCLK_CHOOSE
+
+_utils.AVR_TIMER_EXTCLK_FLAG_TN_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_TN = _utils.AVR_TIMER_EXTCLK_FLAG_TN
+
+_utils.AVR_TIMER_EXTCLK_FLAG_STARTED_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_STARTED = _utils.AVR_TIMER_EXTCLK_FLAG_STARTED
+
+_utils.AVR_TIMER_EXTCLK_FLAG_REVDIR_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_REVDIR = _utils.AVR_TIMER_EXTCLK_FLAG_REVDIR
+
+_utils.AVR_TIMER_EXTCLK_FLAG_AS2_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_AS2 = _utils.AVR_TIMER_EXTCLK_FLAG_AS2
+
+_utils.AVR_TIMER_EXTCLK_FLAG_VIRT_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_VIRT = _utils.AVR_TIMER_EXTCLK_FLAG_VIRT
+
+_utils.AVR_TIMER_EXTCLK_FLAG_EDGE_swigconstant(_utils)
+AVR_TIMER_EXTCLK_FLAG_EDGE = _utils.AVR_TIMER_EXTCLK_FLAG_EDGE
 class avr_timer_comp_t(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, avr_timer_comp_t, name, value)
@@ -1328,10 +1360,22 @@ class avr_timer_t(_object):
     __swig_getmethods__["cs_div"] = _utils.avr_timer_t_cs_div_get
     if _newclass:
         cs_div = _swig_property(_utils.avr_timer_t_cs_div_get, _utils.avr_timer_t_cs_div_set)
-    __swig_setmethods__["cs_div_clock"] = _utils.avr_timer_t_cs_div_clock_set
-    __swig_getmethods__["cs_div_clock"] = _utils.avr_timer_t_cs_div_clock_get
+    __swig_setmethods__["cs_div_value"] = _utils.avr_timer_t_cs_div_value_set
+    __swig_getmethods__["cs_div_value"] = _utils.avr_timer_t_cs_div_value_get
     if _newclass:
-        cs_div_clock = _swig_property(_utils.avr_timer_t_cs_div_clock_get, _utils.avr_timer_t_cs_div_clock_set)
+        cs_div_value = _swig_property(_utils.avr_timer_t_cs_div_value_get, _utils.avr_timer_t_cs_div_value_set)
+    __swig_setmethods__["ext_clock_pin"] = _utils.avr_timer_t_ext_clock_pin_set
+    __swig_getmethods__["ext_clock_pin"] = _utils.avr_timer_t_ext_clock_pin_get
+    if _newclass:
+        ext_clock_pin = _swig_property(_utils.avr_timer_t_ext_clock_pin_get, _utils.avr_timer_t_ext_clock_pin_set)
+    __swig_setmethods__["ext_clock_flags"] = _utils.avr_timer_t_ext_clock_flags_set
+    __swig_getmethods__["ext_clock_flags"] = _utils.avr_timer_t_ext_clock_flags_get
+    if _newclass:
+        ext_clock_flags = _swig_property(_utils.avr_timer_t_ext_clock_flags_get, _utils.avr_timer_t_ext_clock_flags_set)
+    __swig_setmethods__["ext_clock"] = _utils.avr_timer_t_ext_clock_set
+    __swig_getmethods__["ext_clock"] = _utils.avr_timer_t_ext_clock_get
+    if _newclass:
+        ext_clock = _swig_property(_utils.avr_timer_t_ext_clock_get, _utils.avr_timer_t_ext_clock_set)
     __swig_setmethods__["icp"] = _utils.avr_timer_t_icp_set
     __swig_getmethods__["icp"] = _utils.avr_timer_t_icp_get
     if _newclass:
@@ -1356,6 +1400,14 @@ class avr_timer_t(_object):
     __swig_getmethods__["tov_cycles"] = _utils.avr_timer_t_tov_cycles_get
     if _newclass:
         tov_cycles = _swig_property(_utils.avr_timer_t_tov_cycles_get, _utils.avr_timer_t_tov_cycles_set)
+    __swig_setmethods__["tov_cycles_fract"] = _utils.avr_timer_t_tov_cycles_fract_set
+    __swig_getmethods__["tov_cycles_fract"] = _utils.avr_timer_t_tov_cycles_fract_get
+    if _newclass:
+        tov_cycles_fract = _swig_property(_utils.avr_timer_t_tov_cycles_fract_get, _utils.avr_timer_t_tov_cycles_fract_set)
+    __swig_setmethods__["phase_accumulator"] = _utils.avr_timer_t_phase_accumulator_set
+    __swig_getmethods__["phase_accumulator"] = _utils.avr_timer_t_phase_accumulator_get
+    if _newclass:
+        phase_accumulator = _swig_property(_utils.avr_timer_t_phase_accumulator_get, _utils.avr_timer_t_phase_accumulator_set)
     __swig_setmethods__["tov_base"] = _utils.avr_timer_t_tov_base_set
     __swig_getmethods__["tov_base"] = _utils.avr_timer_t_tov_base_get
     if _newclass:
@@ -1630,6 +1682,9 @@ UART_IRQ_COUNT = _utils.UART_IRQ_COUNT
 _utils.AVR_UART_FLAG_POOL_SLEEP_swigconstant(_utils)
 AVR_UART_FLAG_POOL_SLEEP = _utils.AVR_UART_FLAG_POOL_SLEEP
 
+_utils.AVR_UART_FLAG_POLL_SLEEP_swigconstant(_utils)
+AVR_UART_FLAG_POLL_SLEEP = _utils.AVR_UART_FLAG_POLL_SLEEP
+
 _utils.AVR_UART_FLAG_STDIO_swigconstant(_utils)
 AVR_UART_FLAG_STDIO = _utils.AVR_UART_FLAG_STDIO
 class avr_uart_t(_object):
@@ -1690,6 +1745,22 @@ class avr_uart_t(_object):
     __swig_getmethods__["ucsz2"] = _utils.avr_uart_t_ucsz2_get
     if _newclass:
         ucsz2 = _swig_property(_utils.avr_uart_t_ucsz2_get, _utils.avr_uart_t_ucsz2_set)
+    __swig_setmethods__["fe"] = _utils.avr_uart_t_fe_set
+    __swig_getmethods__["fe"] = _utils.avr_uart_t_fe_get
+    if _newclass:
+        fe = _swig_property(_utils.avr_uart_t_fe_get, _utils.avr_uart_t_fe_set)
+    __swig_setmethods__["dor"] = _utils.avr_uart_t_dor_set
+    __swig_getmethods__["dor"] = _utils.avr_uart_t_dor_get
+    if _newclass:
+        dor = _swig_property(_utils.avr_uart_t_dor_get, _utils.avr_uart_t_dor_set)
+    __swig_setmethods__["upe"] = _utils.avr_uart_t_upe_set
+    __swig_getmethods__["upe"] = _utils.avr_uart_t_upe_get
+    if _newclass:
+        upe = _swig_property(_utils.avr_uart_t_upe_get, _utils.avr_uart_t_upe_set)
+    __swig_setmethods__["rxb8"] = _utils.avr_uart_t_rxb8_set
+    __swig_getmethods__["rxb8"] = _utils.avr_uart_t_rxb8_get
+    if _newclass:
+        rxb8 = _swig_property(_utils.avr_uart_t_rxb8_get, _utils.avr_uart_t_rxb8_set)
     __swig_setmethods__["r_ubrrl"] = _utils.avr_uart_t_r_ubrrl_set
     __swig_getmethods__["r_ubrrl"] = _utils.avr_uart_t_r_ubrrl_get
     if _newclass:
@@ -1714,14 +1785,26 @@ class avr_uart_t(_object):
     __swig_getmethods__["input"] = _utils.avr_uart_t_input_get
     if _newclass:
         input = _swig_property(_utils.avr_uart_t_input_get, _utils.avr_uart_t_input_set)
+    __swig_setmethods__["tx_cnt"] = _utils.avr_uart_t_tx_cnt_set
+    __swig_getmethods__["tx_cnt"] = _utils.avr_uart_t_tx_cnt_get
+    if _newclass:
+        tx_cnt = _swig_property(_utils.avr_uart_t_tx_cnt_get, _utils.avr_uart_t_tx_cnt_set)
+    __swig_setmethods__["rx_cnt"] = _utils.avr_uart_t_rx_cnt_set
+    __swig_getmethods__["rx_cnt"] = _utils.avr_uart_t_rx_cnt_get
+    if _newclass:
+        rx_cnt = _swig_property(_utils.avr_uart_t_rx_cnt_get, _utils.avr_uart_t_rx_cnt_set)
     __swig_setmethods__["flags"] = _utils.avr_uart_t_flags_set
     __swig_getmethods__["flags"] = _utils.avr_uart_t_flags_get
     if _newclass:
         flags = _swig_property(_utils.avr_uart_t_flags_get, _utils.avr_uart_t_flags_set)
-    __swig_setmethods__["usec_per_byte"] = _utils.avr_uart_t_usec_per_byte_set
-    __swig_getmethods__["usec_per_byte"] = _utils.avr_uart_t_usec_per_byte_get
+    __swig_setmethods__["cycles_per_byte"] = _utils.avr_uart_t_cycles_per_byte_set
+    __swig_getmethods__["cycles_per_byte"] = _utils.avr_uart_t_cycles_per_byte_get
     if _newclass:
-        usec_per_byte = _swig_property(_utils.avr_uart_t_usec_per_byte_get, _utils.avr_uart_t_usec_per_byte_set)
+        cycles_per_byte = _swig_property(_utils.avr_uart_t_cycles_per_byte_get, _utils.avr_uart_t_cycles_per_byte_set)
+    __swig_setmethods__["rxc_raise_time"] = _utils.avr_uart_t_rxc_raise_time_set
+    __swig_getmethods__["rxc_raise_time"] = _utils.avr_uart_t_rxc_raise_time_get
+    if _newclass:
+        rxc_raise_time = _swig_property(_utils.avr_uart_t_rxc_raise_time_get, _utils.avr_uart_t_rxc_raise_time_set)
     __swig_setmethods__["stdio_out"] = _utils.avr_uart_t_stdio_out_set
     __swig_getmethods__["stdio_out"] = _utils.avr_uart_t_stdio_out_get
     if _newclass:

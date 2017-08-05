@@ -1,6 +1,6 @@
  %module simavr
  %{
- 
+
  /* Includes the header in the wrapper code */
 #include "sim_avr_types.h"
 #include "sim_irq.h"
@@ -24,7 +24,7 @@
   }
 }
 
-%ignore AVR_IOCTL_IOPORT_GETIRQ_REGBIT;    
+%ignore AVR_IOCTL_IOPORT_GETIRQ_REGBIT;
 
 long AVR_IOCTL_IOPORT_GETIRQ(char _name)
 {
@@ -47,6 +47,7 @@ long AVR_IOCTL_IOPORT_GETIRQ(char _name)
 %include "avr_ioport.h"
 %include "sim_elf.h"
 %include "sim_gdb.h"
+%include "fifo_declare.h"
 %include "sim_vcd_file.h"
 
 
@@ -60,5 +61,3 @@ extern avr_irq_t* get_irq_at(avr_irq_t* irq, int index);
 //extern void avr_thread_step_cycles(avr_t* avr, uint64_t cycles);
 extern void avr_thread_goto_cycle(avr_t* avr, uint64_t cycles);
 extern void avr_terminate_thread();
-
-
